@@ -1,0 +1,138 @@
+http://psr7/index.php?name=Niko&lang=de
+
+$_GET, $_POST, $_COOKIE, $_SESSION, $_SERVER, $_FILES
+
+$request = [
+        'get' => $_GET,
+        'post' => $_POST,
+        'cookie' => $_COOKIE,
+        'session' => $_SESSION,
+        'server' => $_SERVER,
+        'files' => $_FILES,
+    ];
+
+*************************************************************************
+
+ class Request
+     {
+         public function getQueryParams(): array
+         {
+             return $_GET;
+         }
+
+         public function getCookies(): array
+         {
+             return $_COOKIE;
+         }
+
+         public function getSession(): array
+         {
+             return $_SESSION;
+         }
+
+         public function getServer(): array
+         {
+             return $_SERVER;
+         }
+     }
+
+     $request = new Request();
+
+*********************************************************************************************
+
+composer.json
+************************
+
+{
+  "config": {
+    "sort-packages": true
+  },
+  "require": {
+    "php": "^7.1.3"
+  }
+}
+
+*************************************************************
+Namespaces:
+
+Для классов:
+
+namespace Framework\Http;
+
+Для страниц:
+
+namespace Framework\Http(название класса);
+
+************************************************************
+Security:
+
+В composer.lock создаёт список всех устаревших и опасных версий различных скриптов,
+и при попытке использовать что-либо из них, сообщает об опасных уязвимостях.
+
+composer require roave/security-advisories:dev-master
+
+************************************************************
+
+Секция autoload для composer.json
+
+"autoload": {
+    "psr-4": {
+      "Framework\\": "source/Framework"
+    }
+  }
+
+ Означает, что все классы, которые начинаются с namespace Framework необходимо искать по пути "source/Framework"
+
+После добавления необходимо выполнять команду:
+
+composer dump-autoload
+
+*******************************************************************
+
+Теперь вверх каждой страницы добавляем:
+
+namespace Framework\Http(название класса);
+
+chdir(dirname(__DIR__));
+    require 'vendor/autoload.php';
+
+*************************************************************
+Unit тестирование:
+
+1. Выполняем команду:
+
+composer require --dev phpunit/phpunit
+
+2. Создаем папку tests
+
+3. В корне создаем файл phpunit.xml.dist:
+
+***********************************************************
+
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit bootstrap="./vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite name="Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory> suffix=".php">./framework/</directory>
+        </whitelist>
+    </filter>
+</phpunit>
+
+*******************************************************************************
+Затем Refactor > copy > phpunit.xml
+
+***********************************************************************
+
+
+
+*************************************************************
