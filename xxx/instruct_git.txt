@@ -1,0 +1,24 @@
+Создание ssh-ключа для гит
+
+На Windows можно как через cmd, так и Git Bash, на *nix — просто в консоли. Но в cmd я не разбираюсь, поэтому привожу инструкцию только для Git Bash & *nix:
+
+ssh-keygen -t rsa -C "user.name@mail.domain"
+
+***************************************************
+
+После выполнения команды публичный ключ появляется соответственно в
+
+C:\Users\%username%\.ssh\id_rsa.pub
+
+~/.ssh/id_rsa.pub
+
+******************************************************
+
+После этого надо выполнить команды для инициализации гит на компе:
+
+git config --global user.name "YourFullName"
+git config --global user.email myemail@mail.ru
+
+И после этого клонировать свои депозитории по ssh
+
+git@github.com:blablabla.git
